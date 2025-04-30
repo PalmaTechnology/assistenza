@@ -75,7 +75,7 @@
     <img src="logo-ptechnology.png" alt="Logo P-Technology">
   </div>
 
-  <h2>🔧 Verifica Stato Avanzamento Lavori</h2>
+  <h2>Verifica Stato Avanzamento Lavori</h2>
 
   <div class="form-group">
     <input type="text" id="codiceInput" placeholder="Inserisci codice XXXXX">
@@ -98,9 +98,9 @@
 
         let trovato = false;
         for (let i = 1; i < righe.length; i++) {
-          const [cod, stato] = righe[i];
+          const [cod, stato, nota] = righe[i];
           if (cod && cod.trim() === codice) {
-            risultato.textContent = `✅ Stato attuale: ${stato.trim()}`;
+            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}`;
             trovato = true;
             break;
           }
