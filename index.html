@@ -2,43 +2,60 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verifica Stato Lavori - P-Technology</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
-      padding: 30px;
+      padding: 20px;
+      margin: 0;
       max-width: 600px;
-      margin: auto;
-      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
     h2 {
       color: #004080;
       margin-top: 10px;
+      font-size: 1.5em;
+      text-align: center;
     }
     input, button {
       padding: 12px;
-      font-size: 16px;
+      font-size: 1em;
       margin-top: 10px;
       width: 100%;
+      box-sizing: border-box;
     }
     button {
       background-color: #004080;
       color: white;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #0066cc;
     }
     #risultato {
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 1.1em;
       font-weight: bold;
+      text-align: center;
     }
     img.logo {
-      max-width: 200px;
-      margin-bottom: 10px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 15px auto;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
@@ -47,7 +64,7 @@
   <img src="logo-ptechnology.png" alt="Logo P-Technology" class="logo">
   <h2>🔧 Verifica Stato Avanzamento Lavori</h2>
 
-  <p>Inserisci il codice (es. <strong>RP00014</strong>):</p>
+  <p style="text-align: center;">Inserisci il codice (es. <strong>RP00014</strong>):</p>
   <input type="text" id="codiceInput" placeholder="Es. RP00014">
   <button onclick="verificaStato()">Verifica</button>
 
