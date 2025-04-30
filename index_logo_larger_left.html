@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifica Stato Lavori - P-Technology</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #333;
+    }
+    h2 {
+      color: #333333;
+      margin-top: 10px;
+      font-size: 1.5em;
+      text-align: left;
+    }
+    .logo-container {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .logo-container img {
+      max-width: 260px;
+      height: auto;
+    }
+    .form-group {
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 12px;
+      font-size: 1em;
+      width: calc(100% - 130px);
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: middle;
+    }
+    button {
+      width: 120px;
+      padding: 12px;
+      font-size: 1em;
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-left: 10px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0088cc;
+    }
+    #risultato {
+      margin-top: 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: left;
+    }
+    @media (max-width: 480px) {
+      input[type="text"], button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-container">
+    <img src="logo-ptechnology.png" alt="Logo P-Technology">
+  </div>
+
+  <h2>Verifica Stato Avanzamento Lavori</h2>
+
+  <div class="form-group">
+    <input type="text" id="codiceInput" placeholder="Inserisci codice XXXXX">
+    <button onclick="verificaStato()">Verifica</button>
+  </div>
+
+  <div id="risultato"></div>
+
+  <script>
+    async function verificaStato() {
+      const codice = document.getElementById("codiceInput").value.trim();
+      const risultato = document.getElementById("risultato");
+      risultato.textContent = "🔄 Verifica in corso...";
+
+      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs3VZOGDvbdTu0QEWKGrbza_SMxDSmIqpf4PRQqK4CejCBsKEH9eoVK-AMXLagfUK01SyJCkPclgvx/pub?gid=0&single=true&output=csv";
+      try {
+        const res = await fetch(csvUrl);
+        const text = await res.text();
+        const righe = text.split('\n').map(r => r.split(','));
+
+        let trovato = false;
+        for (let i = 1; i < righe.length; i++) {
+          const [cod, stato, nota] = righe[i];
+          if (cod && cod.trim() === codice) {
+            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}`;
+            trovato = true;
+            break;
+          }
+        }
+        if (!trovato) {
+          risultato.textContent = "⚠️ Codice non trovato nel foglio CSV.";
+        }
+      } catch (err) {
+        risultato.textContent = "❌ Errore nel caricamento del CSV.";
+      }
+    }
+  </script>
+
+</body>
+</html>
