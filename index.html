@@ -26,7 +26,7 @@
       margin-bottom: 20px;
     }
     .logo-container img {
-      max-width: 260px;
+      max-width: 260px; margin-left: 0;
       height: auto;
     }
     .form-group {
@@ -98,9 +98,9 @@
 
         let trovato = false;
         for (let i = 1; i < righe.length; i++) {
-          const [cod, stato, nota] = righe[i];
+          const [cod, stato, nota, tempo] = righe[i];
           if (cod && cod.trim() === codice) {
-            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}`;
+            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}<br>⏳ Fine lavori stimata: ${tempo ? tempo.trim() : "Non disponibile"}`;
             trovato = true;
             break;
           }
