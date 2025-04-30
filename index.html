@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Verifica Stato Lavori - P-Technology</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+    h2 {
+      color: #004080;
+      margin-top: 10px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0066cc;
+    }
+    #risultato {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    img.logo {
+      max-width: 200px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
 
+  <img src="logo-ptechnology.png" alt="Logo P-Technology" class="logo">
+  <h2>🔧 Verifica Stato Avanzamento Lavori</h2>
+
+  <p>Inserisci il codice (es. <strong>RP00014</strong>):</p>
+  <input type="text" id="codiceInput" placeholder="Es. RP00014">
+  <button onclick="verificaStato()">Verifica</button>
+
+  <div id="risultato"></div>
+
+  <script>
+    async function verificaStato() {
+      const codice = document.getElementById("codiceInput").value.trim();
+      const risultato = document.getElementById("risultato");
+      risultato.textContent = "🔄 Verifica in corso...";
+
+      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQs3VZOGDvbdTu0QEWKGrbza_SMxDSmIqpf4PRQqK4CejCBsKEH9eoVK-AMXLagfUK01SyJCkPclgvx/pub?gid=0&single=true&output=csv";
+      try {
+        const res = await fetch(csvUrl);
+        const text = await res.text();
+        const righe = text.split('\n').map(r => r.split(','));
+
+        let trovato = false;
+        for (let i = 1; i < righe.length; i++) {
+          const [cod, stato] = righe[i];
+          if (cod && cod.trim() === codice) {
+            risultato.textContent = `✅ Stato attuale: ${stato.trim()}`;
+            trovato = true;
+            break;
+          }
+        }
+        if (!trovato) {
+          risultato.textContent = "⚠️ Codice non trovato nel foglio CSV.";
+        }
+      } catch (err) {
+        risultato.textContent = "❌ Errore nel caricamento del CSV.";
+      }
+    }
+  </script>
+
+</body>
+</html>
