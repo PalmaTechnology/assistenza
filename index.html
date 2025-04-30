@@ -100,7 +100,7 @@
         for (let i = 1; i < righe.length; i++) {
           const [cod, stato, nota, tempo] = righe[i];
           if (cod && cod.trim() === codice) {
-            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}<br>⏳ Fine lavori stimata: ${tempo ? tempo.trim() : "Non disponibile"}`;
+            risultato.innerHTML = `✅ Stato attuale: <strong>${stato.trim()}</strong><br>📝 Note: ${nota ? nota.trim() : "Nessuna nota disponibile."}<br>⏳ Tempo stimato fine lavori: ${tempo ? tempo.trim() : "Non disponibile"}`;
             trovato = true;
             break;
           }
